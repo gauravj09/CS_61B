@@ -99,9 +99,7 @@ public class Planet {
     }
 
     public void draw() {
-        String planetImage = "images/"  + imgFileName;
-        StdDraw.picture(this.xxPos, this.yyPos, planetImage);
-    
+        StdDraw.picture(this.xxPos, this.yyPos, "images/"  + imgFileName);
     }
 
 }

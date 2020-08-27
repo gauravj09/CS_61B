@@ -1,3 +1,5 @@
+import java.sql.Time;
+
 public class NBody {
     public static double readRadius(String filePath) {
         In inputFile = new In(filePath);
@@ -44,15 +46,43 @@ public class NBody {
         
         //first draw the background 
         String imageToDraw = "images/starfield.jpg";
+        StdDraw.enableDoubleBuffering();
         StdDraw.setScale(-radius, radius);
-        StdDraw.picture(T, dt, imageToDraw);
-        StdDraw.picture(0, 0, imageToDraw);
 
-        //draw the planets
-        for(Planet p : totalPlanets) {
-            p.draw();
+        double time = 0;
+
+        while(time < T) {
+            double[] xForces = new double[totalPlanets.length];
+            double[] yForces = new double[totalPlanets.length];
+            
+            for (int i = 0; i < totalPlanets.length; i++) {
+                xForces[i] = totalPlanets[i].calcNetForceExertedByX(totalPlanets);
+                yForces[i] = totalPlanets[i].calcNetForceExertedByY(totalPlanets);
+            }
+
+            for (int i = 0; i < totalPlanets.length; i++) {
+                totalPlanets[i].update(time, xForces[i], yForces[i]);
+            }
+
+            StdDraw.picture(0, 0, imageToDraw);
+
+            for(Planet p : totalPlanets) {
+                p.draw();
+            }
+            
+            StdDraw.show(); 
+            StdDraw.pause(10);
+
+            time += dt;
         }
 
+        StdOut.printf("%d\n", totalPlanets.length);
+        StdOut.printf("%.2e\n", radius);
 
+        for (int i = 0; i < totalPlanets.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+            totalPlanets[i].xxPos, totalPlanets[i].yyPos, totalPlanets[i].xxVel,
+            totalPlanets[i].yyVel, totalPlanets[i].mass, totalPlanets[i].imgFileName);   
+        }
     } 
 }
