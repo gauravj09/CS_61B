@@ -1,10 +1,7 @@
-import java.sql.Time;
-
 public class NBody {
     public static double readRadius(String filePath) {
         In inputFile = new In(filePath);
         inputFile.readInt();
-
         double radius = inputFile.readDouble(); 
 
         return radius;
@@ -17,7 +14,7 @@ public class NBody {
         inputFile.readDouble();
         int index = 0;
 
-        while(index < size) {
+        while (index < size) {
             double xxPositionString = inputFile.readDouble();
             double yyPositionString = inputFile.readDouble();
             double xxVelocityString = inputFile.readDouble();
@@ -25,8 +22,8 @@ public class NBody {
             double mass = inputFile.readDouble();
             String image = inputFile.readString();
             planets[index] = new Planet(xxPositionString, yyPositionString, 
-                                    xxVelocityString, yyVelocityString, 
-                                    mass, image);
+                                        xxVelocityString, yyVelocityString, 
+                                        mass, image);
             index++;
         }
 
@@ -39,8 +36,6 @@ public class NBody {
         String filename = args[2];
         double radius = readRadius(filename);
         Planet[] totalPlanets = readPlanets(filename);
-        
-        //first draw the background 
         String imageToDraw = "images/starfield.jpg";
         StdDraw.enableDoubleBuffering();
         StdDraw.setScale(-radius, radius);
@@ -57,12 +52,12 @@ public class NBody {
             }
 
             for (int i = 0; i < totalPlanets.length; i++) {
-                totalPlanets[i].update(time, xForces[i], yForces[i]);
+                totalPlanets[i].update(dt, xForces[i], yForces[i]);
             }
 
             StdDraw.picture(0, 0, imageToDraw);
 
-            for(Planet p : totalPlanets) {
+            for (Planet p : totalPlanets) {
                 p.draw();
             }
             
