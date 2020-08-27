@@ -12,15 +12,12 @@ public class NBody {
 
     public static Planet[] readPlanets(String filePath) {
         In inputFile = new In(filePath);
-        Planet[] planets = new Planet[5];
-
-        inputFile.readInt();
+        int size = inputFile.readInt();
+        Planet[] planets = new Planet[size];
         inputFile.readDouble();
-        
         int index = 0;
 
-        while(index < 5) {
-
+        while(index < size) {
             double xxPositionString = inputFile.readDouble();
             double yyPositionString = inputFile.readDouble();
             double xxVelocityString = inputFile.readDouble();
@@ -30,7 +27,6 @@ public class NBody {
             planets[index] = new Planet(xxPositionString, yyPositionString, 
                                     xxVelocityString, yyVelocityString, 
                                     mass, image);
-
             index++;
         }
 
