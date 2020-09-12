@@ -1,16 +1,24 @@
 /**
  * Created by jug on 1/22/18.
  */
+import java.math.BigInteger;
+
 public class DebugExercise3 {
-    public static int countTurnips(In in) {
-        int totalTurnips = 0;
+    public static long countTurnips(In in) {
+        long totalTurnips = 0;
         while (!in.isEmpty()) {
             String vendor = in.readString();
             String foodType = in.readString();
             double cost = in.readDouble();
-            int numAvailable = in.readInt();
+            long numAvailable = in.readLong();
             if (foodType.equals("turnip")) {
-                int newTotal = totalTurnips + numAvailable;
+                if (totalTurnips + numAvailable < 0) {
+                    System.out.println("Breaks at vendor: " + vendor);
+                    totalTurnips = 0;
+                    continue;
+                }
+
+                long newTotal = totalTurnips + numAvailable;
                 totalTurnips = newTotal;
             }
             in.readLine();
