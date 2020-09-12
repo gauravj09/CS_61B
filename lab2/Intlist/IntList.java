@@ -97,23 +97,29 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
+        if (A == null) {
+            return B;
+        }
+
         IntList res = new IntList(A.first, null);
         IntList ptr = res;
-        A = A.rest;
+        IntList iterateA = A.rest;
 
-        //add elements of A
-        while (A != null) {
-            ptr.rest = new IntList(A.first, null);
-            A = A.rest;
+        while (iterateA != null) {
+            ptr.rest = new IntList(iterateA.first, null);
+            iterateA = iterateA.rest;
             ptr = ptr.rest;
         }
-        //add elements of B
-        while (B != null) {
-            ptr.rest = new IntList(B.first, null);
-            B = B.rest;
-            ptr = ptr.rest;
-        }
+        ptr.rest = B;
         return res;
+    }
+
+    public static IntList recursiveConcate(IntList A, IntList B) {
+        if (A == null) {
+            return B;
+        }
+
+        return new IntList(A.first, recursiveConcate(A.rest, B));
     }
 
 
