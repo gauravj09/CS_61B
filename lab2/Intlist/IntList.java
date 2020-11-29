@@ -29,7 +29,7 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
@@ -81,7 +81,6 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
         IntList refA = A;
 
         while (refA.rest != null) {
@@ -91,12 +90,22 @@ public class IntList {
         return A;
     }
 
+    public static IntList recursiveDcatenate(IntList A, IntList B) {
+        IntList ptr = A;
+
+        if (A.rest != null) {
+            recursiveDcatenate(A.rest, B);
+        }
+
+        A.rest = B;
+        return ptr;
+    }
+
     /**
      * Returns a list consisting of the elements of A followed by the
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
         if (A == null) {
             return B;
         }
@@ -112,7 +121,21 @@ public class IntList {
         }
         ptr.rest = B;
         return res;
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static IntList recursiveConcate(IntList A, IntList B) {
         if (A == null) {
@@ -259,4 +282,3 @@ public class IntList {
         return out.toString();
     }
 }
-
