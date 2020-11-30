@@ -91,14 +91,16 @@ public class IntList {
     }
 
     public static IntList recursiveDcatenate(IntList A, IntList B) {
-        IntList ptr = A;
+        return hRecursiveDcatenate(A, A, B);
+    }
 
-        if (A.rest != null) {
-            recursiveDcatenate(A.rest, B);
+    public static IntList hRecursiveDcatenate(IntList head, IntList A, IntList B) {
+        if (A.rest == null) {
+            A.rest = B;
+            return head;
+        } else {
+            return hRecursiveDcatenate(head, A.rest, B);
         }
-
-        A.rest = B;
-        return ptr;
     }
 
     /**
