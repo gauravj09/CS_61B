@@ -99,6 +99,10 @@ public class ArrayDeque<T> {
         return size;
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public T removeFirst() {
         T temp = items[frontPtr + 1];
         items[frontPtr + 1] = null;
