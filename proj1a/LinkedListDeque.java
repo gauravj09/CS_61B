@@ -12,12 +12,26 @@ public class LinkedListDeque<T> {
     }
 
     private GenericNode sentinel;
-    private int size = 0;
+    private int size;
 
     public LinkedListDeque() {
         sentinel = new GenericNode(null, null, null);
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
+        size = 0;
+    }
+
+    /* Constructor referenced from Dr. Hug's Youtube Video
+    *  @Source: https://www.youtube.com/watch?v=JNroRiEG7U4 */
+    public LinkedListDeque(LinkedListDeque other) {
+        sentinel = new GenericNode(null, null, null);
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
+        size = 0;
+
+        for(int i = 0; i < other.size(); i++) {
+            addLast((T) other.get(i));
+        }
     }
 
     public void addFirst(T item) {
@@ -26,7 +40,7 @@ public class LinkedListDeque<T> {
         first.next.prev = first;
         size++;
     }
-
+    /*Adds generic item to the last place*/
     public void addLast(T item) {
         GenericNode last = new GenericNode(sentinel.prev, item, sentinel);
         sentinel.prev = last;
