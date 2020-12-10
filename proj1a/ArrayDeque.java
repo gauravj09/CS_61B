@@ -111,12 +111,12 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        int circularIndex = frontPtr + 1 + i;
-
-        if (circularIndex >= size) {
-            return items[circularIndex - size];
+        int circularIndex = frontPtr + 1;
+        if (circularIndex + i >= size) {
+            return items[(circularIndex + i) % items.length];
         }
-        return items[circularIndex];
+
+        return items[circularIndex + i];
     }
 
     /** Returns the number of items in the list. */
