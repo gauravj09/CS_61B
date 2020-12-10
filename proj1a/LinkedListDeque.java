@@ -4,7 +4,7 @@ public class LinkedListDeque<T> {
         public GenericNode prev;
         public T val;
 
-        public GenericNode(GenericNode p, T i, GenericNode n) {
+        private GenericNode(GenericNode p, T i, GenericNode n) {
             prev = p;
             val = i;
             next = n;
@@ -110,7 +110,7 @@ public class LinkedListDeque<T> {
         return ptr.val;
     }
 
-    public T getRecursive(int index) {
+    private T getRecursive(int index) {
         if (size() < index) {
             return null;
         }

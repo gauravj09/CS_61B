@@ -52,7 +52,6 @@ public class ArrayDeque<T> {
         RESIZE_HELPER *= 2;
     }
 
-
     public void addFirst(T x) {
         /*resize the array if it is full*/
         if (size == items.length) {
@@ -60,9 +59,7 @@ public class ArrayDeque<T> {
         }
 
         if (frontPtr == 0) {
-            items[frontPtr] = x;
-            size += 1;
-            frontPtr = items.length - 1;
+            updatePtrAdder(frontPtr, items.length - 1, x);
             return;
         }
 
@@ -78,9 +75,7 @@ public class ArrayDeque<T> {
         }
 
         if (backPtr == items.length - 1) {
-            items[backPtr] = x;
-            backPtr = 0;
-            size += 1;
+            updatePtrAdder(backPtr, 0, x);
             return;
         }
 
@@ -89,9 +84,37 @@ public class ArrayDeque<T> {
         backPtr += 1;
     }
 
+    private void updatePtrAdder(int currentIndexLocation, int updatedIndexLocation, T x) {
+        items[currentIndexLocation] = x;
+        size += 1;
+        updatePtr(currentIndexLocation, updatedIndexLocation);
+    }
+
+    private void updatePtr(int currentIndexLocation, int updatedIndexLocation) {
+        if (currentIndexLocation == frontPtr) {
+            frontPtr = updatedIndexLocation;
+            return;
+        }
+
+        if (currentIndexLocation == backPtr) {
+            backPtr = updatedIndexLocation;
+        }
+    }
+
     /** Gets the ith item in the list (0 is the front). */
     public T get(int i) {
-        return items[frontPtr + 1 + i];
+
+        //garbage input
+        if (i >= size || i < 0) {
+            return null;
+        }
+
+        int circularIndex = frontPtr + 1 + i;
+
+        if (circularIndex >= size) {
+            return items[circularIndex - size];
+        }
+        return items[circularIndex];
     }
 
     /** Returns the number of items in the list. */
@@ -104,6 +127,14 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        if (frontPtr == items.length - 1) {
+            updatePtr(frontPtr, 0);
+        }
+
         T temp = items[frontPtr + 1];
         items[frontPtr + 1] = null;
         size -= 1;
@@ -114,6 +145,15 @@ public class ArrayDeque<T> {
     /** Deletes item from back of the list and
      * returns deleted item. */
     public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        //realign backptr if it reaches index 0
+        if (backPtr == 0) {
+            updatePtr(backPtr, items.length);
+        }
+
         T temp = items[backPtr - 1];
         items[backPtr - 1] = null;
         size -= 1;
