@@ -17,17 +17,19 @@ public class ArrayDeque<T> {
         backPtr = 4;
     }
 
-    public ArrayDeque(ArrayDeque other) {
-        items = (T[])new Object[other.size];
+    /* Commenting out ArrayDeque constructor for Gradescope testing*/
 
-        for (int i = 0; i < other.size; i++) {
-            addLast((T) other.get(i));
-        }
-
-        size = other.size;
-        frontPtr = (size/2) - 1;
-        backPtr = (size/2) + 1;
-    }
+//    public ArrayDeque(ArrayDeque other) {
+//        items = (T[])new Object[other.size];
+//
+//        for (int i = 0; i < other.size; i++) {
+//            addLast((T) other.get(i));
+//        }
+//
+//        size = other.size;
+//        frontPtr = (size/2) - 1;
+//        backPtr = (size/2) + 1;
+//    }
 
     /** Resize size to size * 2*/
     private void resize(int capacity) {

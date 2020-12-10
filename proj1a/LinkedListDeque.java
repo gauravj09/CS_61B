@@ -21,18 +21,19 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    /* Constructor referenced from Dr. Hug's Youtube Video
-    *  @Source: https://www.youtube.com/watch?v=JNroRiEG7U4 */
-    public LinkedListDeque(LinkedListDeque other) {
-        sentinel = new GenericNode(null, null, null);
-        sentinel.next = sentinel;
-        sentinel.prev = sentinel;
-        size = 0;
-
-        for(int i = 0; i < other.size(); i++) {
-            addLast((T) other.get(i));
-        }
-    }
+/* Removed the LinkedListDeque(LinkedListDeque other) constructor for gradescope */
+//    /* Constructor referenced from Dr. Hug's Youtube Video
+//    *  @Source: https://www.youtube.com/watch?v=JNroRiEG7U4 */
+//    public LinkedListDeque(LinkedListDeque other) {
+//        sentinel = new GenericNode(null, null, null);
+//        sentinel.next = sentinel;
+//        sentinel.prev = sentinel;
+//        size = 0;
+//
+//        for(int i = 0; i < other.size(); i++) {
+//            addLast((T) other.get(i));
+//        }
+//    }
 
     public void addFirst(T item) {
         GenericNode first = new GenericNode(sentinel, item, sentinel.next);
@@ -110,7 +111,7 @@ public class LinkedListDeque<T> {
         return ptr.val;
     }
 
-    private T getRecursive(int index) {
+    public T getRecursive(int index) {
         if (size() < index) {
             return null;
         }
@@ -118,7 +119,7 @@ public class LinkedListDeque<T> {
         return recursiveHelper(0, index, sentinel.next);
     }
 
-    public T recursiveHelper(int counter, int index, GenericNode ptr) {
+    private T recursiveHelper(int counter, int index, GenericNode ptr) {
         if (counter >= index) {
             return ptr.val;
         }
