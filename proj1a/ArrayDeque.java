@@ -38,13 +38,13 @@ public class ArrayDeque<T> {
         //System.arraycopy(items, frontPtr, tempArr, RESIZE_HELPER, size);
 
         for (int i = 0; i < size; i++) {
-            tempArr[ptrToResize] = items[ptr];
-            ptr++;
-            ptrToResize++;
-
             if (ptr == items.length) {
                 ptr = 0;
             }
+
+            tempArr[ptrToResize] = items[ptr];
+            ptr++;
+            ptrToResize++;
         }
 
         items = tempArr;
@@ -103,8 +103,10 @@ public class ArrayDeque<T> {
         }
 
         int circularIndex = frontPtr + 1;
-        if (circularIndex + i >= size) {
-            return items[(circularIndex + i) % items.length];
+
+        if (circularIndex + i >= items.length) {
+            int index = (circularIndex + i) % items.length;
+            return items[index];
         }
 
         return items[circularIndex + i];
