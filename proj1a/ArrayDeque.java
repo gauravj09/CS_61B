@@ -18,18 +18,17 @@ public class ArrayDeque<T> {
     }
 
     /* Commenting out ArrayDeque constructor for Gradescope testing*/
-
-//    public ArrayDeque(ArrayDeque other) {
-//        items = (T[])new Object[other.size];
-//
-//        for (int i = 0; i < other.size; i++) {
-//            addLast((T) other.get(i));
-//        }
-//
-//        size = other.size;
-//        frontPtr = (size/2) - 1;
-//        backPtr = (size/2) + 1;
-//    }
+    //    public ArrayDeque(ArrayDeque other) {
+    //        items = (T[])new Object[other.size];
+    //
+    //        for (int i = 0; i < other.size; i++) {
+    //            addLast((T) other.get(i));
+    //        }
+    //
+    //        size = other.size;
+    //        frontPtr = (size/2) - 1;
+    //        backPtr = (size/2) + 1;
+    //    }
 
     /** Resize size to size * 2*/
     private void resize(int capacity) {
@@ -128,13 +127,20 @@ public class ArrayDeque<T> {
         return size == 0;
     }
 
+    private T removeAndReturn(int currentIndexLocation, int updatedIndexLocation) {
+        updatePtr(currentIndexLocation, updatedIndexLocation);
+        T temp = items[frontPtr];
+
+        return temp;
+    }
+
     public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
 
         if (frontPtr == items.length - 1) {
-            updatePtr(frontPtr, 0);
+            return removeAndReturn(frontPtr, 0);
         }
 
         T temp = items[frontPtr + 1];
@@ -177,6 +183,4 @@ public class ArrayDeque<T> {
             iterate += 1;
         }
     }
-
-
 }
