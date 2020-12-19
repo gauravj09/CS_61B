@@ -126,19 +126,6 @@ public class IntList {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static IntList recursiveConcate(IntList A, IntList B) {
         if (A == null) {
             return B;
@@ -146,20 +133,6 @@ public class IntList {
 
         return new IntList(A.first, recursiveConcate(A.rest, B));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
