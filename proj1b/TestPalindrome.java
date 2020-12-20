@@ -23,7 +23,18 @@ public class TestPalindrome {
 
         /*bad input check */
         assertEquals(palindrome.isPalindrome("1a1"), true);
-        assertEquals(palindrome.isPalindrome("lol"), true);
-        assertEquals(palindrome.isPalindrome("quack"), false);
+        assertEquals(palindrome.isPalindrome("abA"), false);
+        assertEquals(palindrome.isPalindrome("aab"), false);
+    }
+
+    @Test
+    public void offByPalindrome() {
+        CharacterComparator offByOne = new OffByOne();
+        assertTrue(palindrome.isPalindrome("flake", offByOne));
+
+        CharacterComparator offBy5 = new OffByN(5);
+        assertTrue(palindrome.isPalindrome("af", offBy5));
+        assertTrue(palindrome.isPalindrome("fa", offBy5));
+        assertFalse(palindrome.isPalindrome("fh", offBy5));
     }
 }

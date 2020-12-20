@@ -10,42 +10,38 @@ public class Palindrome {
     }
 
     public boolean isPalindrome(String word) {
-        if (word.length() == 0 || word.length() == 1) {
+        Deque<Character> deque = wordToDeque(word);
+        if (palindromeHelper(deque)) {
             return true;
         }
 
-        return recursivePalindromeHelper(word, 0, word.length() - 1);
+        while (deque.removeFirst() == deque.removeLast()) {
+            if (palindromeHelper(deque)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    private boolean recursivePalindromeHelper(String word, int frontPtr, int backPtr) {
-        if (frontPtr >= backPtr) {
-            return true;
-        }
-
-        if (word.charAt(frontPtr) != word.charAt(backPtr)) {
-            return false;
-        }
-
-        return recursivePalindromeHelper(word, frontPtr + 1, backPtr - 1);
+    private boolean palindromeHelper(Deque<Character> deque) {
+        return deque.size() == 0 || deque.size() == 1;
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
-        if (word.length() == 0 || word.length() == 1) {
+        Deque<Character> deque = wordToDeque(word);
+        if (palindromeHelper(deque)) {
             return true;
         }
 
-        return recursiveCCHelper(word, cc, 0, word.length() - 1);
-    }
-
-    private boolean recursiveCCHelper(String word, CharacterComparator cc, int frontPtr, int backPtr) {
-        if (frontPtr >= backPtr) {
-            return true;
+        while (cc.equalChars(deque.removeFirst(), deque.removeLast())) {
+            if (palindromeHelper(deque)) {
+                return true;
+            }
         }
 
-        if (cc.equalChars(word.charAt(frontPtr), word.charAt(backPtr))) {
-            return false;
-        }
-
-        return recursivePalindromeHelper(word, frontPtr + 1, backPtr - 1);
+        return false;
     }
+
 }
+
