@@ -8,7 +8,7 @@ public class LinkedListDeque<Item> extends LinkedList<Item> implements Deque<Ite
         System.out.println("dummy");
     }
 
-    public Item getRecursive(int i ) {
+    public Item getRecursive(int i) {
         return get(i);
     }
 
@@ -25,7 +25,7 @@ public class LinkedListDeque<Item> extends LinkedList<Item> implements Deque<Ite
     public Item removeLast() {
         try {
             return super.removeLast();
-        } catch(NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             return null;
         }
     }
