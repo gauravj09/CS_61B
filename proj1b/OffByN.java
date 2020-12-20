@@ -1,4 +1,4 @@
-public class OffByN extends Palindrome implements CharacterComparator {
+public class OffByN extends Object implements CharacterComparator {
     private int differenceOfN;
 
     public OffByN(int n) {
