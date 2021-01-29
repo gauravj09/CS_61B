@@ -48,4 +48,4 @@ For more information visit the course website [here.](https://sp18.datastructur.
 
 This MOOC would not have been possible without the brilliant lecture series by Professor Josh Hug and the UCB for providing the course resources for free. 
 
-Additionally, the [r/learnJava] (https://www.reddit.com/r/learnjava/) subreddit and discord group Java MOOC acted like TAs when I was stuck on critical problems. If anybody is looking to take this course be sure to check them out. 
+Additionally, the [r/learnJava](https://www.reddit.com/r/learnjava/) subreddit and discord group Java MOOC acted like TAs when I was stuck on critical problems. If anybody is looking to take this course be sure to check them out. 
