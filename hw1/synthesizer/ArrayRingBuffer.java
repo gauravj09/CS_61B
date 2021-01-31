@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 //TODO: Make sure to make this class and all of its methods public
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
-public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Iterable<T> {
+public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
     /* Index for the next enqueue. */
@@ -90,22 +90,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
         return new ArrayRingIterator();
     }
 
-    public void printList() {
-        System.out.print("[");
-
-        for (int i = 0; i < capacity(); i++) {
-            System.out.print(rb[i]);
-
-            if (i == capacity - 1) {
-                break;
-            }
-
-            System.out.print(", ");
-        }
-
-        System.out.print("]");
-    }
-
     private class ArrayRingIterator implements Iterator<T> {
         private int ringIterator;
 
@@ -124,9 +108,5 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
             ringIterator += 1;
             return nextElement;
         }
-    }
-
-    public static void main(String[] args) {
-        ArrayRingBuffer<Integer> sampleArr = new ArrayRingBuffer<>(10);
     }
 }
