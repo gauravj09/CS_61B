@@ -22,7 +22,6 @@ public class GuitarString {
         buffer = new ArrayRingBuffer((int) (SR / frequency));
     }
 
-
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
         // TODO: Dequeue everything in the buffer, and replace it with random numbers
@@ -30,15 +29,18 @@ public class GuitarString {
         //       double r = Math.random() - 0.5;
         //
         //       Make sure that your random numbers are different from each other.
-        int bufferDequeueFilled = buffer.fillCount();;
 
-        for (int i = 0; i < bufferDequeueFilled; i++) {
+        for (int i = 0; i < buffer.capacity(); i++) {
+            if (buffer.isEmpty()) {
+                break;
+            }
+
             buffer.dequeue();
         }
 
         for (int i = 0; i < buffer.capacity(); i++) {
-            double r = Math.random() - 0.5;
-            buffer.enqueue(r);
+            double randomNumber = Math.random() - 0.5;
+            buffer.enqueue(randomNumber);
         }
     }
 
@@ -51,7 +53,9 @@ public class GuitarString {
         //       Do not call StdAudio.play().
 
         /* Return when buffer is empty */
-        checkForException();
+        if (buffer.isEmpty()) {
+            throw new RuntimeException("Buffer is Empty");
+        }
 
         double currentSample = buffer.dequeue();
         double bufferPeak = sample();
@@ -64,13 +68,10 @@ public class GuitarString {
     /* Return the double at the front of the buffer. */
     public double sample() {
         // TODO: Return the correct thing.
-        checkForException();
-        return buffer.peek();
-    }
-
-    private void checkForException() {
         if (buffer.isEmpty()) {
             throw new RuntimeException("Buffer is Empty");
         }
+
+        return buffer.peek();
     }
 }
