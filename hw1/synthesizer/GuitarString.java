@@ -50,16 +50,27 @@ public class GuitarString {
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
 
+        /* Return when buffer is empty */
+        checkForException();
+
         double currentSample = buffer.dequeue();
-        double bufferPeak = buffer.peek();
+        double bufferPeak = sample();
 
         double updateSample = (currentSample + bufferPeak)/2 * DECAY;
+
         buffer.enqueue(updateSample);
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
         // TODO: Return the correct thing.
+        checkForException();
         return buffer.peek();
+    }
+
+    private void checkForException() {
+        if (buffer.isEmpty()) {
+            throw new RuntimeException("Buffer is Empty");
+        }
     }
 }
