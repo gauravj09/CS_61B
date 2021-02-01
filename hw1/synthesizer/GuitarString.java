@@ -1,6 +1,9 @@
 // TODO: Make sure to make this class a part of the synthesizer package
 package synthesizer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 //Make sure this class is public
 public class GuitarString {
     /** Constants. Do not change. In case you're curious, the keyword final means
@@ -12,14 +15,22 @@ public class GuitarString {
     /* Buffer for storing sound data. */
     private BoundedQueue<Double> buffer;
 
+    private double randomNumber() {
+        return Math.random() - 0.5;
+    }
+
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
         // TODO: Create a buffer with capacity = SR / frequency. You'll need to
         //       cast the result of this divsion operation into an int. For better
         //       accuracy, use the Math.round() function before casting.
         //       Your buffer should be initially filled with zeros.
+        int bufferCapacity = (int) Math.round(SR/frequency);
+        buffer = new ArrayRingBuffer(bufferCapacity);
 
-        buffer = new ArrayRingBuffer((int) (SR / frequency));
+        while (!buffer.isFull()) {
+            buffer.enqueue(0.0);
+        }
     }
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
@@ -30,17 +41,20 @@ public class GuitarString {
         //
         //       Make sure that your random numbers are different from each other.
 
-        for (int i = 0; i < buffer.capacity(); i++) {
-            if (buffer.isEmpty()) {
-                break;
-            }
+        Set<Double> bufferSet = new HashSet<>();
 
-            buffer.dequeue();
+       while (!buffer.isEmpty()) {
+           buffer.dequeue();
+       }
+
+        /* ensure no duplicates by using HashSets */
+        while (!buffer.isFull()) {
+            bufferSet.add(randomNumber());
         }
 
-        for (int i = 0; i < buffer.capacity(); i++) {
-            double randomNumber = Math.random() - 0.5;
-            buffer.enqueue(randomNumber);
+        /* fill the buffer with unique random numbers*/
+        for (double d : bufferSet) {
+            buffer.enqueue(d);
         }
     }
 
@@ -52,26 +66,13 @@ public class GuitarString {
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
 
-        /* Return when buffer is empty */
-        if (buffer.isEmpty()) {
-            throw new RuntimeException("Buffer is Empty");
-        }
-
-        double currentSample = buffer.dequeue();
-        double bufferPeak = sample();
-
-        double updateSample = (currentSample + bufferPeak)/2 * DECAY;
-
+        double updateSample = (buffer.dequeue() + sample())/2 * DECAY;
         buffer.enqueue(updateSample);
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
         // TODO: Return the correct thing.
-        if (buffer.isEmpty()) {
-            throw new RuntimeException("Buffer is Empty");
-        }
-
         return buffer.peek();
     }
 }
