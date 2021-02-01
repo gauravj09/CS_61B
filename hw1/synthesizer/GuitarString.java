@@ -15,10 +15,6 @@ public class GuitarString {
     /* Buffer for storing sound data. */
     private BoundedQueue<Double> buffer;
 
-    private double randomNumber() {
-        return Math.random() - 0.5;
-    }
-
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
         // TODO: Create a buffer with capacity = SR / frequency. You'll need to
@@ -40,19 +36,17 @@ public class GuitarString {
         //       double r = Math.random() - 0.5;
         //
         //       Make sure that your random numbers are different from each other.
-
         Set<Double> bufferSet = new HashSet<>();
 
-       while (!buffer.isEmpty()) {
-           buffer.dequeue();
-       }
-
-        /* ensure no duplicates by using HashSets */
-        while (!buffer.isFull()) {
-            bufferSet.add(randomNumber());
+        while (!buffer.isEmpty()) {
+            buffer.dequeue();
         }
 
-        /* fill the buffer with unique random numbers*/
+        for (int i = 0; i < buffer.capacity(); i++) {
+            double r = Math.random() - 0.5;
+            bufferSet.add(r);
+        }
+
         for (double d : bufferSet) {
             buffer.enqueue(d);
         }
@@ -66,7 +60,7 @@ public class GuitarString {
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
 
-        double updateSample = (buffer.dequeue() + sample())/2 * DECAY;
+        double updateSample = DECAY * (buffer.dequeue() + sample())/2;
         buffer.enqueue(updateSample);
     }
 
