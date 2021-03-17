@@ -3,6 +3,9 @@ package lab9;
 import java.util.Iterator;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /**
  *  A hash table-backed Map implementation. Provides amortized constant time
  *  access to elements via get(), remove(), and put() in the best case.
@@ -53,19 +56,28 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        int hash = hash(key);
+        return buckets[hash].get(key);
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        int hash = hash(key);
+
+        if (buckets[hash].containsKey(key)) {
+            buckets[hash].put(key, value);
+            return;
+        }
+
+        buckets[hash].put(key, value);
+        size += 1;
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
@@ -95,5 +107,15 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     @Override
     public Iterator<K> iterator() {
         throw new UnsupportedOperationException();
+    }
+
+    public static void main(String[] args) {
+        MyHashMap<String, String> dictionary = new MyHashMap<>();
+
+        // can put objects in dictionary and get them
+        dictionary.put("hello", "world");
+        System.out.println(dictionary.containsKey("hello"));
+        System.out.println(dictionary.get("hello"));
+        System.out.println(dictionary.size());
     }
 }
