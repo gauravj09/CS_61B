@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class MyHashMap<K, V> implements Map61B<K, V> {
 
-    private static final int DEFAULT_SIZE = 4;
+    private static final int DEFAULT_SIZE = 16;
     private static final double MAX_LF = 0.75;
 
     private ArrayMap<K, V>[] buckets;
@@ -118,17 +118,5 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     @Override
     public Iterator<K> iterator() {
         throw new UnsupportedOperationException();
-    }
-
-    public static void main(String[] args) {
-        MyHashMap<String, String> dictionary = new MyHashMap<>();
-
-        // can put objects in dictionary and get them
-        dictionary.put("hello", "world");
-        dictionary.put("good", "game");
-        dictionary.put("welcome", "back");
-        dictionary.put("ok", "google");
-
-        System.out.println(dictionary.size());
     }
 }
