@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class MyHashMap<K, V> implements Map61B<K, V> {
 
-    private static final int DEFAULT_SIZE = 16;
+    private static final int DEFAULT_SIZE = 4;
     private static final double MAX_LF = 0.75;
 
     private ArrayMap<K, V>[] buckets;
@@ -70,8 +70,19 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
             return;
         }
 
+        // resize when the ArrayMap hits 75% of its capacity
+        if (size == (MAX_LF * buckets.length)) {
+            resize(buckets.length * 2);
+        }
+
         buckets[hash].put(key, value);
         size += 1;
+    }
+
+    private void resize(int capacity) {
+        ArrayMap<K, V>[] copyOfBuckets = new ArrayMap[capacity];
+        System.arraycopy(buckets, 0, copyOfBuckets, 0, size);
+        System.arraycopy(copyOfBuckets, 0, buckets, 0, size);
     }
 
     /* Returns the number of key-value mappings in this map. */
@@ -114,8 +125,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
         // can put objects in dictionary and get them
         dictionary.put("hello", "world");
-        System.out.println(dictionary.containsKey("hello"));
-        System.out.println(dictionary.get("hello"));
+        dictionary.put("good", "game");
+        dictionary.put("welcome", "back");
+        dictionary.put("ok", "google");
+
         System.out.println(dictionary.size());
     }
 }
