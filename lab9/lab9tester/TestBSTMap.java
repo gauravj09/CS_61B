@@ -54,12 +54,12 @@ public class TestBSTMap {
     @Test
     public void sanityGetTest() {
         BSTMap<String, Integer> b = new BSTMap<String, Integer>();
-        assertEquals(null, b.get("starChild"));
+        assertNull(b.get("starChild"));
         assertEquals(0, b.size());
         b.put("starChild", 5);
-        assertTrue(((Integer) b.get("starChild")).equals(5));
+        assertEquals(5, (int) ((Integer) b.get("starChild")));
         b.put("KISS", 5);
-        assertTrue(((Integer) b.get("KISS")).equals(5));
+        assertEquals(5, (int) ((Integer) b.get("KISS")));
         assertNotEquals(null, b.get("starChild"));
         assertEquals(2, b.size());
     }
@@ -83,7 +83,7 @@ public class TestBSTMap {
         BSTMap<String, Integer> b = new BSTMap<String, Integer>();
         b.put("hi", 1);
         assertTrue(b.containsKey("hi"));
-        assertTrue(b.get("hi") != null);
+        assertNotNull(b.get("hi"));
     }
 
     public static void main(String[] args) {

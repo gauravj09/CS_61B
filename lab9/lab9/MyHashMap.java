@@ -3,6 +3,9 @@ package lab9;
 import java.util.Iterator;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /**
  *  A hash table-backed Map implementation. Provides amortized constant time
  *  access to elements via get(), remove(), and put() in the best case.
@@ -53,19 +56,39 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        int hash = hash(key);
+        return buckets[hash].get(key);
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        int hash = hash(key);
+
+        if (buckets[hash].containsKey(key)) {
+            buckets[hash].put(key, value);
+            return;
+        }
+
+        // resize when the ArrayMap hits 75% of its capacity
+        if (size == (MAX_LF * buckets.length)) {
+            resize(buckets.length * 2);
+        }
+
+        buckets[hash].put(key, value);
+        size += 1;
+    }
+
+    private void resize(int capacity) {
+        ArrayMap<K, V>[] copyOfBuckets = new ArrayMap[capacity];
+        System.arraycopy(buckets, 0, copyOfBuckets, 0, size);
+        System.arraycopy(copyOfBuckets, 0, buckets, 0, size);
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////

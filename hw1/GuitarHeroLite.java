@@ -18,7 +18,11 @@ public class GuitarHeroLite {
                 } else if (key == 'c') {
                     stringC.pluck();
                 }
+
+                stringA.pluck();
+                stringC.pluck();
             }
+
 
         /* compute the superposition of samples */
             double sample = stringA.sample() + stringC.sample();
